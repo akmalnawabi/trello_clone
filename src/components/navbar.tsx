@@ -17,7 +17,9 @@ export default function Navbar() {
                 <div className="flex items-center space-x-2">
                     {isSignedIn ? <div className="flex flex-col sm:flex-row 
                     items-end sm:items-center space-y-1 sm:space-y-0 sm:space-x-4">
-                        <span className="text-sm sm:text-base text-gray-600 hidden sm:block">Welcome, {user?.firstName ?? user?.emailAddresses[0].emailAddress}</span>
+                        <span className="text-sm sm:text-base text-gray-600 hidden sm:block">
+                            Welcome, {user?.firstName ?? user?.emailAddresses[0].emailAddress}
+                        </span>
                         <Link href="/dashboard">
                             <Button>
                                 <span>Dashboard</span>

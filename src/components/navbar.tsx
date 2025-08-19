@@ -1,8 +1,9 @@
 'use client'
 
 import { SignInButton, SignUpButton, useUser } from "@clerk/nextjs"
-import { Kanban } from "lucide-react"
+import { ArrowRight, Kanban } from "lucide-react"
 import { Button } from "./ui/button"
+import Link from "next/link"
 
 export default function Navbar() {
     const { isSignedIn, user } = useUser()
@@ -16,8 +17,13 @@ export default function Navbar() {
                 <div className="flex items-center space-x-2">
                     {isSignedIn ? <div className="flex flex-col sm:flex-row 
                     items-end sm:items-center space-y-1 sm:space-y-0 sm:space-x-4">
-                        <span className="text-sm sm:text-base text-gray-600">Welcome, {user?.firstName ?? user?.emailAddresses[0].emailAddress}</span>
-                        
+                        <span className="text-sm sm:text-base text-gray-600 hidden sm:block">Welcome, {user?.firstName ?? user?.emailAddresses[0].emailAddress}</span>
+                        <Link href="/dashboard">
+                            <Button>
+                                <span>Dashboard</span>
+                                <ArrowRight className="w-4 h-4" />
+                            </Button>
+                        </Link>
                     </div> : <div>
                         <SignInButton>
                             <Button variant="ghost">Sign In</Button>

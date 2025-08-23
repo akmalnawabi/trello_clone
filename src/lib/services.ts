@@ -10,7 +10,7 @@ export const boardsService = {
     return data || [];
   },
 
-   async createBoards(board: Omit<Board, 'id' | 'created_at' | 'updated_at'>): Promise<Board> {
+   async createBoard(board: Omit<Board, 'id' | 'created_at' | 'updated_at'>): Promise<Board> {
     const supabase = await createClient();
     const { data, error } = await supabase
     .from('boards').insert(board).select().single();

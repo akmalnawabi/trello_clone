@@ -8,7 +8,7 @@ export interface Board {
     updated_at: string;
 }
 
-export interface column {
+export interface Column {
   id: string;
   board_id: string;
   title: string;

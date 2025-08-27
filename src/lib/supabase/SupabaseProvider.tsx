@@ -1,3 +1,4 @@
+'use client'
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useSession } from "@clerk/nextjs";
@@ -19,9 +20,18 @@ export default function SupabaseProvider({ children }: { children: React.ReactNo
 
   useEffect(() => {
     if (!session) return;
+    // Check if environment variables are available
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANNON_KEY; // Fixed to match .env file
+
+    if (!supabaseUrl || !supabaseKey) {
+      console.error('Missing Supabase environment variables');
+      return;
+    }
+
     const client = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      supabaseUrl,
+      supabaseKey,
       {
         accessToken: async () => session?.getToken() ?? null,
       }
@@ -31,8 +41,8 @@ export default function SupabaseProvider({ children }: { children: React.ReactNo
     setIsLoaded(true);
   }, [session])
 
-  return <Context.Provider value={{ supabase: null, isLoaded: false }}>
-    {isLoaded ? <div>Lodaing...</div> : children }
+  return <Context.Provider value={{ supabase, isLoaded }}>
+    {children}
   </Context.Provider>
 }
 
